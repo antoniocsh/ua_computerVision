@@ -31,7 +31,7 @@ cv2.imshow( "Display window 3", image3)
 cv2.imshow( "Display window 4", image4)
 
 
-cv2.imwrite("saved_image.jpg", image3)
+# cv2.imwrite("saved_image.jpg", image3)
 
 
 # Wait
