@@ -6,7 +6,7 @@ matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
 
 # Read color image
-image = cv2.imread("filme.jpeg", cv2.IMREAD_COLOR)
+image = cv2.imread("../images/Fruits-RGB.tif", cv2.IMREAD_COLOR)
 
 if np.shape(image) == ():
     print("Image file could not be open!")
