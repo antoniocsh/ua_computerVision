@@ -1,80 +1,63 @@
-# Aula_02_ex_03.py
-#
-# Historam visualization with openCV
-#
-# Paulo Dias
-
-#import
 import sys
 import numpy as np
 import cv2
+import matplotlib
+matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
 
-# Read the image from argv
-# image = cv2.imread( sys.argv[1] , cv2.IMREAD_UNCHANGED );
-image = cv2.imread( "../images/lena.jpg", cv2.IMREAD_UNCHANGED );
+image = cv2.imread("../images/deti.bmp", cv2.IMREAD_GRAYSCALE)
+image2 = cv2.imread("../images/input.png", cv2.IMREAD_GRAYSCALE)
 
-if  np.shape(image) == ():
-	# Failed Reading
-	print("Image file could not be open!")
-	exit(-1)
+if image is None:
+    print("Image could not be loaded!")
+    exit(-1)
 
-# Image characteristics
-if len (image.shape) > 2:
-	print ("The loaded image is NOT a GRAY-LEVEL image !")
-	exit(-1)
+def contrast_stretch(img):
 
-# Display the image
-cv2.namedWindow("Original Image")
-cv2.imshow("Original Image", image)
+    minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(img)
 
-# print some features
-height, width = image.shape
-nchannels = 1
-print("Image Size: (%d,%d)" % (height, width))
-print("Image Type: %d" % nchannels)
-print("Number of elements : %d" % image.size)
+    print("Min intensity:", minVal)
+    print("Max intensity:", maxVal)
 
-print("Image Size: (%d,%d)" % (height, width))
+    # apply formula
+    final = ((img - minVal) / (maxVal - minVal)) * 255
 
-# Size
-histSize = 256	 # from 0 to 255
-# Intensity Range
-histRange = [0, 256]
+    # convert to uint8 pq ya
+    final = final.astype(np.uint8)
 
-# Compute the histogram
-hist_item = cv2.calcHist([image], [0], None, [histSize], histRange)
+    return final
 
-##########################################
-# Drawing with openCV
-# Create an image to display the histogram
-histImageWidth = 512
-histImageHeight = 512
-color = (125)
-histImage = np.zeros((histImageWidth,histImageHeight,1), np.uint8)
 
-# Width of each histogram bar
-binWidth = int (np.ceil(histImageWidth*1.0 / histSize))
+# Apply contrast stretching
+result1 = contrast_stretch(image)
+result2 = contrast_stretch(image2)
 
-# Normalize values to [0, histImageHeight]
-cv2.normalize(hist_item, hist_item, 0, histImageHeight, cv2.NORM_MINMAX)
+# Histograms
+hist_original1 = cv2.calcHist([image],[0],None,[256],[0,256])
+hist_result1 = cv2.calcHist([result1],[0],None,[256],[0,256])
 
-# Draw the bars of the nomrmalized histogram
-for i in range (histSize):
-	cv2.rectangle(histImage,  ( i * binWidth, 0 ), ( ( i + 1 ) * binWidth, int(hist_item[i]) ), (125), -1)
+hist_original2 = cv2.calcHist([image2],[0],None,[256],[0,256])
+hist_result2 = cv2.calcHist([result2],[0],None,[256],[0,256])
 
-# ATTENTION : Y coordinate upside down
-histImage = np.flipud(histImage)
+# Show images
+cv2.imshow("Original DETI", image)
+cv2.imshow("Stretched DETI", result1)
 
-cv2.imshow('colorhist', histImage)
+cv2.imshow("Original input", image2)
+cv2.imshow("Stretched input", result2)
+
 cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-##########################
-# Drawing using matplotlib
-plt.plot(hist_item,'r')
-plt.xlim(histRange)
+# Plot histograms
+plt.figure("DETI Histogram")
+plt.plot(hist_original1, 'b', label="Original")
+plt.plot(hist_result1, 'r', label="Stretched")
+plt.legend()
+
+plt.figure("Input Histogram")
+plt.plot(hist_original2, 'b', label="Original")
+plt.plot(hist_result2, 'r', label="Stretched")
+plt.legend()
+
 plt.show()
-
-
-
-
