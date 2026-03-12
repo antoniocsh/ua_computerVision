@@ -64,9 +64,7 @@ if linesP is not None:
         cv2.line(image_prob, (x1,y1), (x2,y2), (0,0,255), 2)
 
 
-# -----------------------------
 # Show results
-# -----------------------------
 cv2.imshow("Original Image", image)
 cv2.imshow("Detected Lines - Standard Hough", image_color)
 cv2.imshow("Detected Lines - Probabilistic Hough", image_prob)
