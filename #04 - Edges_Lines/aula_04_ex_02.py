@@ -36,19 +36,19 @@ cv2.imshow('Orginal', image)
 # Average filter 3 x 3
 image_3x3 = image.copy()
 for i in range(0, iterations):
-	image_3x3 = cv2.blur( image, (3, 3))
+	image_3x3 = cv2.blur( image_3x3, (3, 3))
 cv2.namedWindow( f"Average Filter 3 x 3 - {iterations} Iter", cv2.WINDOW_AUTOSIZE )
 cv2.imshow( f"Average Filter 3 x 3 - {iterations} Iter", image_3x3 )
 
 image_5x5 = image.copy()
 for i in range(0, iterations):
-	image_5x5 = cv2.blur( image, (5, 5))
+	image_5x5 = cv2.blur( image_5x5, (5, 5))
 cv2.namedWindow( f"Average Filter 5 x 5 - {iterations} Iter", cv2.WINDOW_AUTOSIZE )
 cv2.imshow( f"Average Filter 5 x 5 - {iterations} Iter", image_5x5 )
 
 image_7x7 = image.copy()
 for i in range(0, iterations):
-	image_7x7 = cv2.blur( image, (7, 7))
+	image_7x7 = cv2.blur( image_7x7, (7, 7))
 cv2.namedWindow( f"Average Filter 7 x 7 - {iterations} Iter", cv2.WINDOW_AUTOSIZE )
 cv2.imshow( f"Average Filter 7 x 7 - {iterations} Iter", image_7x7 )
 
