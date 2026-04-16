@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 img = cv2.imread('../images/lena.jpg', cv2.IMREAD_GRAYSCALE) 
+# img = cv2.imread('../images/wdg2.bpm', cv2.IMREAD_GRAYSCALE)
 
 def click(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:

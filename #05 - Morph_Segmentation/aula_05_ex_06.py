@@ -4,7 +4,6 @@ import cv2
 import numpy as np
 
 def main():
-    # Load image
     image = cv2.imread('../images/lena.jpg', cv2.IMREAD_GRAYSCALE )
     flood_image = image.copy()
     h, w = image.shape
